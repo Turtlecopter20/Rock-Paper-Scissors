@@ -14,10 +14,15 @@ let playerChoice;
 let message;
 let playerCounter = 0;
 let computerCounter = 0;
-function getBothchoices(){
-    getComputerChoice();
-    playerChoice =  prompt("Choose your weapon between rock , paper or scissors!", "").toLowerCase();
-}
+const div = document.querySelector('#container');
+const rockButton = document.querySelector('#rock');
+const paperButton = document.querySelector('#paper');
+const scissorsButton = document.querySelector('#scissors');
+const result = document.querySelector('#result');
+const finalResult = document.querySelector('#finalresult');
+const playerShowCounter = document.querySelector('#playerscore');
+const computerShowCounter = document.querySelector('#computerscore');
+
 function playRound(computerChoice, playerChoice) {
     if (computerChoice === playerChoice) message = "It's a draw pick again!";
     else if (computerChoice === "rock" && playerChoice === "scissors" || computerChoice === "scissors" && playerChoice === "paper" || computerChoice === "paper" && playerChoice === "rock") {
@@ -25,15 +30,46 @@ function playRound(computerChoice, playerChoice) {
      computerCounter++;
     }
     else {message = `You win! ${playerChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}.`;
-        playerCounter++;
+    playerCounter++;
         }
-    
 }
-for (let i = 1; i<=5; i++){
-    getBothchoices();
+
+div.addEventListener('click', (e) => {
+    let target = e.target;
+    switch (target.id) {
+        case 'rock' :
+            playerChoice = 'rock';
+            break;
+        case 'paper' :
+            playerChoice = 'paper';
+            break;
+        case 'scissors' :
+            playerChoice = 'scissors';
+            break;
+    }
+    if (computerCounter == 0 && playerCounter == 0) finalResult.textContent = "";
+    getComputerChoice();
     playRound(computerChoice, playerChoice);
     console.log(message);
+    result.textContent = `${message}`;
+    playerShowCounter.textContent = `${playerCounter}`;
+    computerShowCounter.textContent = `${computerCounter}`;
+    checkWinner(computerCounter, playerCounter);
+
+   } )
+
+function resetGame() {
+    computerCounter = 0;
+    playerCounter = 0;
+    result.textContent = '';
 }
-if (playerCounter < computerCounter) console.log("You lost all your lives, the computer has won!")
-else if (playerCounter > computerCounter) console.log("You've won it all, good job!");
-else console.log("Ahhh, it's a draw! Maybe next time lad!");
+function checkWinner (computerCounter, playerCounter){
+if (computerCounter > playerCounter && computerCounter == 5) {
+    finalResult.textContent = "You lost all your lives, I have won!";
+    resetGame();
+    }
+else if(playerCounter > computerCounter && playerCounter == 5) {
+    finalResult.textContent = "You've won it all, good job!";
+    resetGame();
+    }
+}
