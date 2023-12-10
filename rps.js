@@ -52,8 +52,8 @@ div.addEventListener('click', (e) => {
     playRound(computerChoice, playerChoice);
     console.log(message);
     result.textContent = `${message}`;
-    playerShowCounter.textContent = `${playerCounter}`;
-    computerShowCounter.textContent = `${computerCounter}`;
+    playerShowCounter.textContent = `Player score : ${playerCounter}`;
+    computerShowCounter.textContent = `Computer score : ${computerCounter}`;
     checkWinner(computerCounter, playerCounter);
 
    } )
